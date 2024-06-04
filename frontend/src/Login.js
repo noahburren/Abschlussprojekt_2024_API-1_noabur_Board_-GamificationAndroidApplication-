@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginValidation";
+import Validation from "./LoginValidation";
 
 function Login() {
   const [values, setValues] = useState({
@@ -19,7 +20,7 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setErrors(validation(values));
+    setErrors(Validation(values));
   };
 
   return (
@@ -38,6 +39,9 @@ function Login() {
               onChange={handleInput}
               className="form-control rounded-0"
             />
+            {errors.email && (
+              <span className="text-danger"> {errors.email}</span>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="password">
@@ -50,6 +54,9 @@ function Login() {
               onChange={handleInput}
               className="form-control rounded-0"
             />
+            {errors.password && (
+              <span className="text-danger"> {errors.password}</span>
+            )}
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Log in
