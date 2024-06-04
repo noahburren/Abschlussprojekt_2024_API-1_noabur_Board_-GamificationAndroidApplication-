@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Validation from "./LoginValidation";
 
@@ -35,8 +35,10 @@ function Signup() {
               type="text"
               placeholder="Enter Name"
               name="name"
+              onChange={handleInput}
               className="form-control rounded-0"
             />
+            {errors.name && <span className="text-danger"> {errors.name}</span>}
           </div>
           <div className="mb-3">
             <label htmlFor="email">
@@ -46,8 +48,12 @@ function Signup() {
               type="email"
               placeholder="Enter Email"
               name="email"
+              onChange={handleInput}
               className="form-control rounded-0"
             />
+            {errors.email && (
+              <span className="text-danger"> {errors.email}</span>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="password">
@@ -57,10 +63,16 @@ function Signup() {
               type="password"
               placeholder="Enter Password"
               name="password"
+              onChange={handleInput}
               className="form-control rounded-0"
             />
+            {errors.password && (
+              <span className="text-danger"> {errors.password}</span>
+            )}
           </div>
-          <button className="btn btn-success w-100 rounded-0">Sign up</button>
+          <button type="submit" className="btn btn-success w-100 rounded-0">
+            Sign up
+          </button>
           <p></p>
           <Link
             to="/"
