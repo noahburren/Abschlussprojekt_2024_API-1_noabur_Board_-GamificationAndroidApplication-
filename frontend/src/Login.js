@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
+import axios from "axios";
 
 function Login() {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
-  const handeInput = (event) => {
+  const handleInput = (event) => {
     setValues((prev) => ({
       ...prev,
       [event.target.name]: [event.target.value],
@@ -19,6 +21,18 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors(Validation(values));
+    if (errors.email === "" && errors.password === "") {
+      axios
+        .post("http://localhost:8081/login", values)
+        .then((res) => {
+          if (res.data === "Success") {
+            navigate("/home");
+          } else {
+            alert("No record exitsed");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -34,7 +48,7 @@ function Login() {
               type="email"
               placeholder="Enter Email"
               name="email"
-              onChange={handeInput}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.email && (
@@ -49,7 +63,7 @@ function Login() {
               type="password"
               placeholder="Enter Password"
               name="password"
-              onChange={handeInput}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.password && (
