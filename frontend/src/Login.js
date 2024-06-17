@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Login() {
   const [values, setValues] = useState({
