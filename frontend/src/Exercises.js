@@ -1,12 +1,15 @@
+// Exercises.js
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Neue Zeile: Import für useNavigate
 
 const Exercises = () => {
   const { category } = useParams();
   const [exercises, setExercises] = useState([]);
   const [selectedExercises, setSelectedExercises] = useState([]);
   const userId = 1; // Beispiel-Benutzer-ID. Mit der tatsächlichen Benutzer-ID aus deinem Authentifizierungssystem ersetzen.
+  const navigate = useNavigate(); // Neue Zeile: useNavigate Hook für die Navigation
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -58,6 +61,10 @@ const Exercises = () => {
     }
   };
 
+  const handleNavigateToHome = () => {
+    navigate("/home"); // Navigiere zur "/home"-Route
+  };
+
   return (
     <div>
       <h1>Übungen für {category}</h1>
@@ -77,6 +84,8 @@ const Exercises = () => {
       </ul>
       <button onClick={handleSaveExercises}>Save Exercises</button>
       <button onClick={handleDeleteExercises}>Delete All Exercises</button>
+      <button onClick={handleNavigateToHome}>Zurück zu Home</button>{" "}
+      {/* Neuer Button zur Navigation zur Home-Seite */}
     </div>
   );
 };
