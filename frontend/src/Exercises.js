@@ -6,7 +6,7 @@ const Exercises = () => {
   const { category } = useParams();
   const [exercises, setExercises] = useState([]);
   const [selectedExercises, setSelectedExercises] = useState([]);
-  const userId = 1; // Example user ID. Replace with actual user ID from your auth system.
+  const userId = 1; // Beispiel-Benutzer-ID. Mit der tatsächlichen Benutzer-ID aus deinem Authentifizierungssystem ersetzen.
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -45,6 +45,19 @@ const Exercises = () => {
     }
   };
 
+  const handleDeleteExercises = async () => {
+    try {
+      await axios.delete(`http://localhost:8081/user-exercises/${category}`, {
+        data: { userId },
+      });
+      alert("Exercises deleted successfully!");
+      setSelectedExercises([]); // Clear selected exercises state
+    } catch (error) {
+      console.error("Error deleting exercises:", error);
+      alert("Error deleting exercises.");
+    }
+  };
+
   return (
     <div>
       <h1>Übungen für {category}</h1>
@@ -63,6 +76,7 @@ const Exercises = () => {
         ))}
       </ul>
       <button onClick={handleSaveExercises}>Save Exercises</button>
+      <button onClick={handleDeleteExercises}>Delete All Exercises</button>
     </div>
   );
 };

@@ -66,16 +66,51 @@ app.get("/exercises/:category", (req, res) => {
 app.post("/user-exercises", (req, res) => {
   const { userId, category, exercises } = req.body;
 
-  const insertQuery =
-    "INSERT INTO user_exercises (user_id, category, exercise_id) VALUES ?";
-  const values = exercises.map((exercise) => [userId, category, exercise.ID]);
+  // Zuerst alle vorhandenen Einträge dieser Kategorie löschen
+  const deleteQuery =
+    "DELETE FROM user_exercises WHERE user_id = ? AND category = ?";
+  dbExercises.query(
+    deleteQuery,
+    [userId, category],
+    (deleteErr, deleteResult) => {
+      if (deleteErr) {
+        console.error("Error deleting exercises:", deleteErr);
+        return res.status(500).json("Internal server error");
+      }
 
-  dbExercises.query(insertQuery, [values], (err, result) => {
+      // Jetzt die neuen ausgewählten Übungen einfügen
+      const insertQuery =
+        "INSERT INTO user_exercises (user_id, category, exercise_id) VALUES ?";
+      const values = exercises.map((exercise) => [
+        userId,
+        category,
+        exercise.ID,
+      ]);
+
+      dbExercises.query(insertQuery, [values], (insertErr, insertResult) => {
+        if (insertErr) {
+          console.error("Error saving exercises:", insertErr);
+          return res.status(500).json("Internal server error");
+        }
+        return res.json("Exercises saved successfully!");
+      });
+    }
+  );
+});
+
+// Endpoint zum Löschen aller Benutzerübungen einer Kategorie
+app.delete("/user-exercises/:category", (req, res) => {
+  const { userId } = req.body;
+  const category = req.params.category;
+
+  const deleteQuery =
+    "DELETE FROM user_exercises WHERE user_id = ? AND category = ?";
+  dbExercises.query(deleteQuery, [userId, category], (err, result) => {
     if (err) {
-      console.error("Error saving exercises:", err);
+      console.error("Error deleting user exercises:", err);
       return res.status(500).json("Internal server error");
     }
-    return res.json("Exercises saved successfully!");
+    return res.json("User exercises deleted successfully!");
   });
 });
 
