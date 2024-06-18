@@ -6,7 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Verbindung zur ersten Datenbank (signup)
 const dbSignup = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -14,7 +13,6 @@ const dbSignup = mysql.createConnection({
   database: "signup",
 });
 
-// Verbindung zur zweiten Datenbank (Uebungsdatenbank)
 const dbExercises = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -22,7 +20,6 @@ const dbExercises = mysql.createConnection({
   database: "Uebungsdatenbank",
 });
 
-// Endpoint für die Benutzerregistrierung
 app.post("/signup", (req, res) => {
   const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
   const values = [req.body.name, req.body.email, req.body.password];
@@ -34,7 +31,6 @@ app.post("/signup", (req, res) => {
   });
 });
 
-// Endpoint für die Benutzeranmeldung
 app.post("/login", (req, res) => {
   const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
   dbSignup.query(sql, [req.body.email, req.body.password], (err, data) => {
@@ -49,7 +45,6 @@ app.post("/login", (req, res) => {
   });
 });
 
-// Endpoint zum Abrufen der Übungen basierend auf der Kategorie
 app.get("/exercises/:category", (req, res) => {
   const category = req.params.category;
   const sql = "SELECT ID, NAME FROM Uebungen WHERE Kategorie = ?";
@@ -62,11 +57,9 @@ app.get("/exercises/:category", (req, res) => {
   });
 });
 
-// Endpoint zum Speichern der ausgewählten Übungen eines Benutzers
 app.post("/user-exercises", (req, res) => {
   const { userId, category, exercises } = req.body;
 
-  // Zuerst alle vorhandenen Einträge dieser Kategorie löschen
   const deleteQuery =
     "DELETE FROM user_exercises WHERE user_id = ? AND category = ?";
   dbExercises.query(
@@ -78,7 +71,6 @@ app.post("/user-exercises", (req, res) => {
         return res.status(500).json("Internal server error");
       }
 
-      // Jetzt die neuen ausgewählten Übungen einfügen
       const insertQuery =
         "INSERT INTO user_exercises (user_id, category, exercise_id) VALUES ?";
       const values = exercises.map((exercise) => [
@@ -98,7 +90,6 @@ app.post("/user-exercises", (req, res) => {
   );
 });
 
-// Endpoint zum Löschen aller Benutzerübungen einer Kategorie
 app.delete("/user-exercises/:category", (req, res) => {
   const { userId } = req.body;
   const category = req.params.category;

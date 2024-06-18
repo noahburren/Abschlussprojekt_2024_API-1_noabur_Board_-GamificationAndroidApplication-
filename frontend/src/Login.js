@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+// Login.js
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./LoginValidation";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthContext } from "./AuthContext"; // Import des AuthContext
 
 function Login() {
   const [values, setValues] = useState({
@@ -11,6 +13,7 @@ function Login() {
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const { login } = useContext(AuthContext); // AuthContext verwenden
 
   const handleInput = (event) => {
     setValues((prev) => ({
@@ -24,12 +27,12 @@ function Login() {
     const validationErrors = Validation(values);
     setErrors(validationErrors);
 
-    // Proceed only if there are no validation errors
     if (Object.keys(validationErrors).length === 0) {
       axios
         .post("http://localhost:8081/login", values)
         .then((res) => {
           if (res.data.message === "Success") {
+            login({ userId: res.data.userId }); // Benutzer-ID im AuthContext speichern
             navigate("/home");
           } else {
             alert("No record existed");
@@ -44,7 +47,7 @@ function Login() {
       <div className="bg-white p-3 rounded w-25">
         <h2>Sign-In</h2>
         <form onSubmit={handleSubmit}>
-          <div className="">
+          <div>
             <label htmlFor="email">
               <strong>Email</strong>
             </label>

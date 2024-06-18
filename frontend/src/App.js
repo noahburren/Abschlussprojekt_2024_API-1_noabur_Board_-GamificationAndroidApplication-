@@ -5,19 +5,24 @@ import Signup from "./Signup";
 import Home from "./Home";
 import Exercises from "./Exercises";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import { AuthProvider } from "./AuthContext"; // Import des AuthProvider
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/exercises/:category" element={<Exercises />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      {" "}
+      {/* AuthProvider um BrowserRouter gewickelt */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/exercises/:category" element={<Exercises />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
