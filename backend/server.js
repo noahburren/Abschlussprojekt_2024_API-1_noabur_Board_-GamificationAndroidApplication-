@@ -39,12 +39,12 @@ app.post("/login", (req, res) => {
   const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
   dbSignup.query(sql, [req.body.email, req.body.password], (err, data) => {
     if (err) {
-      return res.json("Error");
+      return res.json({ message: "Error" });
     }
     if (data.length > 0) {
-      return res.json("Success");
+      return res.json({ message: "Success", userId: data[0].id });
     } else {
-      return res.json("Fail");
+      return res.json({ message: "Fail" });
     }
   });
 });
@@ -52,13 +52,30 @@ app.post("/login", (req, res) => {
 // Endpoint zum Abrufen der Übungen basierend auf der Kategorie
 app.get("/exercises/:category", (req, res) => {
   const category = req.params.category;
-  const sql = "SELECT NAME FROM Uebungen WHERE Kategorie = ?";
+  const sql = "SELECT ID, NAME FROM Uebungen WHERE Kategorie = ?";
   dbExercises.query(sql, [category], (err, data) => {
     if (err) {
       console.error("Error fetching exercises:", err);
       return res.status(500).json("Internal server error");
     }
     return res.json(data);
+  });
+});
+
+// Endpoint zum Speichern der ausgewählten Übungen eines Benutzers
+app.post("/user-exercises", (req, res) => {
+  const { userId, category, exercises } = req.body;
+
+  const insertQuery =
+    "INSERT INTO user_exercises (user_id, category, exercise_id) VALUES ?";
+  const values = exercises.map((exercise) => [userId, category, exercise.ID]);
+
+  dbExercises.query(insertQuery, [values], (err, result) => {
+    if (err) {
+      console.error("Error saving exercises:", err);
+      return res.status(500).json("Internal server error");
+    }
+    return res.json("Exercises saved successfully!");
   });
 });
 

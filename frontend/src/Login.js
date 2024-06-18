@@ -10,26 +10,29 @@ function Login() {
     password: "",
   });
   const navigate = useNavigate();
-
   const [errors, setErrors] = useState({});
+
   const handleInput = (event) => {
     setValues((prev) => ({
       ...prev,
-      [event.target.name]: [event.target.value],
+      [event.target.name]: event.target.value,
     }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setErrors(Validation(values));
-    if (errors.email === "" && errors.password === "") {
+    const validationErrors = Validation(values);
+    setErrors(validationErrors);
+
+    // Proceed only if there are no validation errors
+    if (Object.keys(validationErrors).length === 0) {
       axios
         .post("http://localhost:8081/login", values)
         .then((res) => {
-          if (res.data === "Success") {
+          if (res.data.message === "Success") {
             navigate("/home");
           } else {
-            alert("No record exitsed");
+            alert("No record existed");
           }
         })
         .catch((err) => console.log(err));
@@ -40,7 +43,7 @@ function Login() {
     <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
       <div className="bg-white p-3 rounded w-25">
         <h2>Sign-In</h2>
-        <form action="" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="">
             <label htmlFor="email">
               <strong>Email</strong>
@@ -74,7 +77,7 @@ function Login() {
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Log in
           </button>
-          <p>You are agree to our terms and policies</p>
+          <p>You agree to our terms and policies</p>
           <Link
             to="/signup"
             className="btn btn-default w-100 bg-light rounded-0 text-decoration-none"

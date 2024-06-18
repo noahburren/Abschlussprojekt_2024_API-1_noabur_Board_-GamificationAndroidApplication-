@@ -1,17 +1,26 @@
--- Löschen falls Datenbank exisitert
+-- Löschen falls Datenbank existiert
 DROP DATABASE IF EXISTS Uebungsdatenbank;
 
 -- Datenbank erstellen
-CREATE DATABASE IF NOT EXISTS Uebungsdatenbank;
+CREATE DATABASE Uebungsdatenbank;
 
 -- Datenbank auswählen
 USE Uebungsdatenbank;
 
--- Tabelle erstellen
+-- Tabelle für Übungen erstellen
 CREATE TABLE IF NOT EXISTS Uebungen (
     ID INTEGER PRIMARY KEY AUTO_INCREMENT,
     NAME TEXT NOT NULL,
     Kategorie TEXT NOT NULL
+);
+
+-- Tabelle für die Zuordnung von Benutzern zu Übungen erstellen
+CREATE TABLE IF NOT EXISTS user_exercises (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    category TEXT NOT NULL,
+    exercise_id INTEGER NOT NULL,
+    FOREIGN KEY (exercise_id) REFERENCES Uebungen(ID)
 );
 
 
