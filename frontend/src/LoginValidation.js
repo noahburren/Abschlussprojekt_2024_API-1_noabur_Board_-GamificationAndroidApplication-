@@ -20,7 +20,8 @@ function Validation(values) {
   } else if (!/\d/.test(values.password)) {
     errors.password = "Passwort muss mindestens eine Zahl enthalten";
   } else if (!/[A-Z]/.test(values.password)) {
-    errors.password = "Passwort muss mindestens einen Großbuchstaben enthalten";
+    errors.password =
+      "Passwort muss mindestens einen Grossbuchstaben enthalten";
   } else if (!password_pattern.test(values.password)) {
     errors.password = "Passwort entspricht nicht den Vorgaben";
   }
