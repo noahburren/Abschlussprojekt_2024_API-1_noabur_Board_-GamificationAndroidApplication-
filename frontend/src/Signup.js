@@ -98,7 +98,7 @@ function Signup() {
             to="/"
             className="btn btn-default w-100 bg-light rounded-0 text-decoration-none"
           >
-            Log in
+            Du hast bereits einen Account?
           </Link>
         </form>
       </div>
