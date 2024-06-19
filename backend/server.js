@@ -27,13 +27,12 @@ app.post("/signup", (req, res) => {
   const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
   const values = [req.body.name, req.body.email, req.body.password];
 
-  // Query ausführen
   dbSignup.query(sql, [values], (err, data) => {
     if (err) {
-      console.error("Error inserting user:", err); // Fehlerausgabe für Entwickler
-      return res.status(500).json("Internal server error"); // Fehlermeldung an den Client
+      console.error("Error inserting user:", err);
+      return res.status(500).json("Internal server error");
     }
-    return res.json(data); // Erfolgreiche Antwort an den Client
+    return res.json(data); // Return some response on success (e.g., { message: "User created" })
   });
 });
 

@@ -2,108 +2,95 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./SignupValidation";
 import axios from "axios";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 function Signup() {
   const [values, setValues] = useState({
     name: "",
     email: "",
     password: "",
   });
-
   const navigate = useNavigate();
-
   const [errors, setErrors] = useState({});
-
   const handleInput = (event) => {
-    const { name, value } = event.target;
     setValues((prev) => ({
       ...prev,
-      [name]: value,
+      [event.target.name]: event.target.value,
     }));
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const validationErrors = Validation(values);
-    setErrors(validationErrors);
-
-    // Überprüfen, ob es keine Validierungsfehler gibt
-    if (Object.keys(validationErrors).length === 0) {
+    setErrors(Validation(values));
+    if (errors.name === "" && errors.email === "" && errors.password === "") {
       axios
         .post("http://localhost:8081/signup", values)
         .then((res) => {
-          navigate("/"); // Nach erfolgreicher Registrierung zur Login-Seite navigieren
+          navigate("/");
         })
         .catch((err) => console.log(err));
     }
   };
-
   return (
-    <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
-      <div className="bg-white p-3 rounded w-25">
-        <h2>Sign-Up</h2>
+    <div className="d-flex justify-content-center align-items-center bg-light vh-100">
+      <div className="bg-white p-5 rounded shadow-lg w-50">
+        <h2 className="mb-4 text-center text-primary">Sign-Up</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name">
+          <div className="form-group mb-3">
+            <label htmlFor="name" className="form-label">
               <strong>Name</strong>
             </label>
             <input
               type="text"
-              placeholder="Name eingeben"
+              placeholder="Enter Name"
               name="name"
-              value={values.name}
               onChange={handleInput}
-              className="form-control rounded-0"
+              className="form-control"
             />
-            {errors.name && <span className="text-danger"> {errors.name}</span>}
+            {errors.name && <span className="text-danger">{errors.name}</span>}
           </div>
-          <div className="mb-3">
-            <label htmlFor="email">
+          <div className="form-group mb-3">
+            <label htmlFor="email" className="form-label">
               <strong>Email</strong>
             </label>
             <input
               type="email"
-              placeholder="Email eingeben"
+              placeholder="Enter Email"
               name="email"
-              value={values.email}
               onChange={handleInput}
-              className="form-control rounded-0"
+              className="form-control"
             />
             {errors.email && (
-              <span className="text-danger"> {errors.email}</span>
+              <span className="text-danger">{errors.email}</span>
             )}
           </div>
-          <div className="mb-3">
-            <label htmlFor="password">
-              <strong>Passwort</strong>
+          <div className="form-group mb-4">
+            <label htmlFor="password" className="form-label">
+              <strong>Password</strong>
             </label>
             <input
               type="password"
-              placeholder="Passwort eingeben"
+              placeholder="Enter Password"
               name="password"
-              value={values.password}
               onChange={handleInput}
-              className="form-control rounded-0"
+              className="form-control"
             />
             {errors.password && (
-              <span className="text-danger"> {errors.password}</span>
+              <span className="text-danger">{errors.password}</span>
             )}
           </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">
+          <button type="submit" className="btn btn-primary w-100 mb-3">
             Sign up
           </button>
-          <p></p>
-          <Link
-            to="/"
-            className="btn btn-default w-100 bg-light rounded-0 text-decoration-none"
-          >
-            Du hast bereits einen Account?
-          </Link>
+          <div className="text-center">
+            <p className="small text-muted">
+              You agree to our terms and policies
+            </p>
+            <Link to="/" className="btn btn-outline-secondary w-100">
+              Log in
+            </Link>
+          </div>
         </form>
       </div>
     </div>
   );
 }
-
 export default Signup;
