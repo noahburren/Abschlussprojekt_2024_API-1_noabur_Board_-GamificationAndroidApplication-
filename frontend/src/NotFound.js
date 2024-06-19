@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"; // Link importieren
+import { Link } from "react-router-dom";
 
 // 404-Komponente
 const NotFound = () => {
