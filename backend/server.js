@@ -94,14 +94,29 @@ app.delete("/user-exercises/:category", (req, res) => {
   const { userId } = req.body;
   const category = req.params.category;
 
-  const deleteQuery =
+  const deleteExercisesQuery =
     "DELETE FROM user_exercises WHERE user_id = ? AND category = ?";
-  dbExercises.query(deleteQuery, [userId, category], (err, result) => {
+  dbExercises.query(deleteExercisesQuery, [userId, category], (err, result) => {
     if (err) {
       console.error("Error deleting user exercises:", err);
       return res.status(500).json("Internal server error");
     }
-    return res.json("User exercises deleted successfully!");
+
+    const deleteCalendarQuery =
+      "DELETE FROM user_calendar WHERE user_id = ? AND category = ?";
+    dbExercises.query(
+      deleteCalendarQuery,
+      [userId, category],
+      (calendarErr, calendarResult) => {
+        if (calendarErr) {
+          console.error("Error deleting calendar entry:", calendarErr);
+          return res.status(500).json("Internal server error");
+        }
+        return res.json(
+          "User exercises and calendar entry deleted successfully!"
+        );
+      }
+    );
   });
 });
 
@@ -134,11 +149,9 @@ app.get("/user-exercises", (req, res) => {
   });
 });
 
-// Endpoint to save the user's exercise category for a specific day
 app.post("/user-calendar", (req, res) => {
   const { userId, day, category } = req.body;
 
-  // Remove existing entry for the user and day
   const deleteQuery = "DELETE FROM user_calendar WHERE user_id = ? AND day = ?";
   dbExercises.query(deleteQuery, [userId, day], (deleteErr, deleteResult) => {
     if (deleteErr) {
@@ -146,7 +159,6 @@ app.post("/user-calendar", (req, res) => {
       return res.status(500).json("Internal server error");
     }
 
-    // Insert the new entry
     const insertQuery =
       "INSERT INTO user_calendar (user_id, day, category) VALUES (?, ?, ?)";
     dbExercises.query(
@@ -163,7 +175,6 @@ app.post("/user-calendar", (req, res) => {
   });
 });
 
-// Endpoint to get the user's exercise categories for the week
 app.get("/user-calendar", (req, res) => {
   const userId = req.query.userId;
   const sql = "SELECT day, category FROM user_calendar WHERE user_id = ?";
