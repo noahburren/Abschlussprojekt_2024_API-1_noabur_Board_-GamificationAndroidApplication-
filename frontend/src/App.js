@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"; // Link importieren
+import { BrowserRouter, Routes, Route } from "react-router-dom"; // Link importieren
 import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
