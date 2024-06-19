@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext"; // Stelle sicher, dass AuthContext 
 
 const Home = () => {
   const navigate = useNavigate();
-  const { userId } = useContext(AuthContext); // Holen Sie sich userId aus dem AuthContext
+  const { userId, logout } = useContext(AuthContext); // Holen Sie sich userId und logout-Funktion aus dem AuthContext
   const [userExercises, setUserExercises] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null); // Initialisiere selectedCategory mit null
 
@@ -32,9 +32,15 @@ const Home = () => {
     setSelectedCategory(category); // Setzen Sie die ausgewählte Kategorie, um Übungen anzuzeigen
   };
 
+  const handleLogout = () => {
+    logout(); // Aufruf der logout-Funktion aus dem AuthContext
+    navigate("/"); // Zurück zur Login-Seite navigieren
+  };
+
   return (
     <div>
       <h1>Wähle eine Muskelgruppe</h1>
+      <button onClick={handleLogout}>Logout</button>
       <ul>
         {muscleGroups.map((group) => (
           <button key={group} onClick={() => handleCategoryClick(group)}>
