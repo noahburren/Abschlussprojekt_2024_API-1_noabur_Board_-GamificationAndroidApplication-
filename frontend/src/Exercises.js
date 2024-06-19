@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "./AuthContext"; // Ensure you have AuthContext to get userId
+import { AuthContext } from "./AuthContext";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Exercises = () => {
   const { category } = useParams();
   const [exercises, setExercises] = useState([]);
   const [selectedExercises, setSelectedExercises] = useState([]);
-  const { userId } = useContext(AuthContext); // Get userId from AuthContext
+  const { userId } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const Exercises = () => {
         data: { userId },
       });
       alert("Exercises deleted successfully!");
-      setSelectedExercises([]); // Clear selected exercises state
+      setSelectedExercises([]);
     } catch (error) {
       console.error("Error deleting exercises:", error);
       alert("Error deleting exercises.");
@@ -61,29 +62,42 @@ const Exercises = () => {
   };
 
   const handleNavigateToHome = () => {
-    navigate("/home"); // Navigate to the home route
+    navigate("/home");
   };
 
   return (
-    <div>
-      <h1>Übungen für {category}</h1>
-      <ul>
-        {exercises.map((exercise) => (
-          <li key={exercise.ID}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedExercises.includes(exercise)}
-                onChange={() => handleSelectExercise(exercise)}
-              />
-              {exercise.NAME}
-            </label>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleSaveExercises}>Save Exercises</button>
-      <button onClick={handleDeleteExercises}>Delete All Exercises</button>
-      <button onClick={handleNavigateToHome}>Zurück zu Home</button>
+    <div className="d-flex justify-content-center align-items-center bg-primary min-vh-100">
+      <div className="bg-white p-3 rounded col-12 col-md-10 col-lg-8 overflow-auto">
+        <h1 className="text-center mb-4">Übungen für {category}</h1>
+        <ul className="list-group mb-4">
+          {exercises.map((exercise) => (
+            <li
+              key={exercise.ID}
+              className="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <label className="mb-0">
+                <input
+                  type="checkbox"
+                  checked={selectedExercises.includes(exercise)}
+                  onChange={() => handleSelectExercise(exercise)}
+                />
+                <span className="ml-2">{exercise.NAME}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+        <div className="d-flex justify-content-between">
+          <button className="btn btn-success" onClick={handleSaveExercises}>
+            Übungen speichern
+          </button>
+          <button className="btn btn-danger" onClick={handleDeleteExercises}>
+            Alle Übungen löschen
+          </button>
+        </div>
+        <button className="btn btn-primary mt-3" onClick={handleNavigateToHome}>
+          Zurück zu Home
+        </button>
+      </div>
     </div>
   );
 };

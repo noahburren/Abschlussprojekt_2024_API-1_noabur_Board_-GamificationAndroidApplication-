@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "./AuthContext"; // Stelle sicher, dass AuthContext importiert ist
+import { AuthContext } from "./AuthContext";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { userId, logout } = useContext(AuthContext); // Holen Sie sich userId und logout-Funktion aus dem AuthContext
+  const { userId, logout } = useContext(AuthContext);
   const [userExercises, setUserExercises] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState(null); // Initialisiere selectedCategory mit null
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const muscleGroups = ["Beine", "Brust", "Rücken", "Arme"];
 
@@ -29,48 +30,74 @@ const Home = () => {
   }, [userId, selectedCategory]);
 
   const handleShowExercises = (category) => {
-    setSelectedCategory(category); // Setzen Sie die ausgewählte Kategorie, um Übungen anzuzeigen
+    setSelectedCategory(category);
   };
 
   const handleLogout = () => {
-    logout(); // Aufruf der logout-Funktion aus dem AuthContext
-    navigate("/"); // Zurück zur Login-Seite navigieren
+    logout();
+    navigate("/");
   };
 
   return (
-    <div>
-      <h1>Wähle eine Muskelgruppe</h1>
-      <button onClick={handleLogout}>Logout</button>
-      <ul>
-        {muscleGroups.map((group) => (
-          <button key={group} onClick={() => handleCategoryClick(group)}>
-            {group}
-          </button>
-        ))}
-      </ul>
+    <div className="d-flex justify-content-center align-items-center bg-primary min-vh-100">
+      <div className="bg-white p-3 rounded col-12 col-md-8 col-lg-6 overflow-auto">
+        <h1 className="text-center mb-4">Wähle eine Muskelgruppe</h1>
+        <button className="btn btn-danger mb-3" onClick={handleLogout}>
+          Logout
+        </button>
+        <ul className="list-group mb-4">
+          {muscleGroups.map((group) => (
+            <li
+              key={group}
+              className="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <button
+                className="btn btn-primary"
+                onClick={() => handleCategoryClick(group)}
+              >
+                {group}
+              </button>
+            </li>
+          ))}
+        </ul>
 
-      <h2>Deine Übungen</h2>
-      {muscleGroups.map((category) => (
-        <div key={category}>
-          <div>
-            <h3>{category}</h3>
-            <ul>
-              {selectedCategory === category &&
-              userExercises[category] &&
-              userExercises[category].length > 0
-                ? userExercises[category].map((exercise) => (
-                    <li key={exercise.ID}>{exercise.NAME}</li>
-                  ))
-                : selectedCategory === category && (
-                    <li>Keine Übung dieser Kategorie vorhanden</li>
+        <h2 className="text-center mb-3">Deine Übungen</h2>
+        {muscleGroups.map((category) => (
+          <div key={category} className="mb-4">
+            <div className="card">
+              <div className="card-header">
+                <h3>{category}</h3>
+              </div>
+              <div className="card-body">
+                <ul className="list-group">
+                  {selectedCategory === category &&
+                  userExercises[category] &&
+                  userExercises[category].length > 0 ? (
+                    userExercises[category].map((exercise) => (
+                      <li
+                        key={exercise.ID}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        {exercise.NAME}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="list-group-item">
+                      Keine Übung dieser Kategorie vorhanden
+                    </li>
                   )}
-            </ul>
+                </ul>
+              </div>
+            </div>
+            <button
+              className="btn btn-success mt-2"
+              onClick={() => handleShowExercises(category)}
+            >
+              Zeige Übungen für {category}
+            </button>
           </div>
-          <button onClick={() => handleShowExercises(category)}>
-            Zeige Übungen für {category}
-          </button>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
