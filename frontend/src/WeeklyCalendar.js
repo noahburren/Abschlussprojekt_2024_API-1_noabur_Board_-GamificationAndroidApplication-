@@ -16,13 +16,13 @@ const WeeklyCalendar = () => {
     "Sonntag",
   ];
   const exercises = {
-    Montag: ["Liegestütze", "Kniebeugen"],
-    Dienstag: ["Rückenstrecker", "Bizeps-Curls"],
-    Mittwoch: ["Plank", "Bankdrücken"],
+    Montag: [],
+    Dienstag: [],
+    Mittwoch: [],
     Donnerstag: [],
-    Freitag: ["Klimmzüge"],
+    Freitag: [],
     Samstag: [],
-    Sonntag: ["Yoga"],
+    Sonntag: [],
   };
 
   const handleNavigateBack = () => {
