@@ -55,7 +55,6 @@ function Login() {
         <h2>Sign-In</h2>
         <form onSubmit={handleSubmit}>
           {" "}
-          {/* Formular mit onSubmit-Handler */}
           <div>
             <label htmlFor="email">
               <strong>Email</strong>
@@ -70,7 +69,6 @@ function Login() {
             {errors.email && (
               <span className="text-danger"> {errors.email}</span>
             )}{" "}
-            {/* Anzeige von Validierungsfehlern für E-Mail */}
           </div>
           <div className="mb-3">
             <label htmlFor="password">
@@ -86,12 +84,10 @@ function Login() {
             {errors.password && (
               <span className="text-danger"> {errors.password}</span>
             )}{" "}
-            {/* Anzeige von Validierungsfehlern für Passwort */}
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Log in
           </button>{" "}
-          {/* Button zum Einloggen */}
           <p></p>
           <Link
             to="/signup"
@@ -99,7 +95,6 @@ function Login() {
           >
             Account erstellen
           </Link>{" "}
-          {/* Link zum Erstellen eines neuen Accounts */}
         </form>
       </div>
     </div>

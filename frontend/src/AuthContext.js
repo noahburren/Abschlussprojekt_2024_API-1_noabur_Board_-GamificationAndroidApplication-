@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   // Gibt den AuthContext.Provider mit Werten für userId, login- und logout-Funktion zurück
   return (
     <AuthContext.Provider value={{ userId: user?.userId, login, logout }}>
-      {children} {/* Rendert die untergeordneten Komponenten */}
+      {children}
     </AuthContext.Provider>
   );
 };

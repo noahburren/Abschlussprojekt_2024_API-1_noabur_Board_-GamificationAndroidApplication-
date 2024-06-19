@@ -88,7 +88,7 @@ const Home = () => {
                           key={exercise.ID}
                           className="list-group-item d-flex justify-content-between align-items-center"
                         >
-                          {exercise.NAME} {/* Anzeige des Übungsnamens */}
+                          {exercise.NAME}
                         </li>
                       ))
                     ) : (

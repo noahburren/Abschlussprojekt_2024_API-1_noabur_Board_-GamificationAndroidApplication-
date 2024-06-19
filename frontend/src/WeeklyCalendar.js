@@ -58,7 +58,6 @@ const WeeklyCalendar = () => {
           Zurück zum Home
         </button>
         <div className="row row-cols-1 row-cols-md-2 g-4">
-          {/* Mapping über die Tage der Woche */}
           {daysOfWeek.map((day, index) => (
             <div key={index} className="col">
               <div className="card">
@@ -67,11 +66,9 @@ const WeeklyCalendar = () => {
                 </div>
                 <div className="card-body">
                   <ul className="list-group">
-                    {/* Überprüfung, ob für den aktuellen Tag Übungen geplant sind */}
                     {weeklyCategories[day] ? (
                       <li className="list-group-item d-flex justify-content-between align-items-center">
                         {weeklyCategories[day]}{" "}
-                        {/* Anzeige der Kategorie für den Tag */}
                       </li>
                     ) : (
                       <li className="list-group-item">Keine Übungen geplant</li>
