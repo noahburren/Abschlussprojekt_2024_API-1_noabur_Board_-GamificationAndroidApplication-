@@ -23,13 +23,13 @@ CREATE TABLE IF NOT EXISTS user_exercises (
     FOREIGN KEY (exercise_id) REFERENCES Uebungen(ID)
 );
 
--- Kalender
+-- Kalender Tabelle erstellen
 CREATE TABLE IF NOT EXISTS user_calendar (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     user_id INTEGER NOT NULL,
     DAY VARCHAR(10) NOT NULL,
     category VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES login(id)
+    FOREIGN KEY (user_id) REFERENCES signup.login(id)
 );
 
 
