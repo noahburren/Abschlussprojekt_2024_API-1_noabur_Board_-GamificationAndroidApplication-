@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"; // Link importieren
 import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
@@ -7,6 +7,7 @@ import Exercises from "./Exercises";
 import WeeklyCalendar from "./WeeklyCalendar";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import { AuthProvider } from "./AuthContext";
+import NotFound from "./NotFound";
 
 function App() {
   return (
@@ -26,10 +27,5 @@ function App() {
     </AuthProvider>
   );
 }
-
-// 404-Komponente
-const NotFound = () => {
-  return <h1>404 - Seite nicht gefunden</h1>;
-};
 
 export default App;
