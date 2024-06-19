@@ -18,8 +18,7 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route path="/home" element={<Home />} />
             <Route path="/exercises/:category" element={<Exercises />} />
-            <Route path="/weekly-calendar" element={<WeeklyCalendar />} />{" "}
-            {/* Route für den Wochenkalender */}
+            <Route path="/weekly-calendar" element={<WeeklyCalendar />} />
           </Route>
         </Routes>
       </BrowserRouter>
