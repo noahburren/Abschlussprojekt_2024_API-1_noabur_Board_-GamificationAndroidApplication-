@@ -15,17 +15,9 @@ const Home = () => {
       <h1>Wähle eine Muskelgruppe</h1>
       <ul>
         {muscleGroups.map((group) => (
-          <li
-            key={group}
-            onClick={() => handleCategoryClick(group)}
-            style={{
-              cursor: "pointer",
-              color: "blue",
-              textDecoration: "underline",
-            }}
-          >
+          <button key={group} onClick={() => handleCategoryClick(group)}>
             {group}
-          </li>
+          </button>
         ))}
       </ul>
     </div>
