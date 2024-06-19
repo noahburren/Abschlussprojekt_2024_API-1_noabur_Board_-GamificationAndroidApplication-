@@ -40,8 +40,10 @@ const Home = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-primary min-vh-100">
-      <div className="bg-white p-3 rounded col-12 col-md-8 col-lg-6 overflow-auto">
+    <div className="bg-primary min-vh-100 py-4">
+      {" "}
+      {/* Added py-4 for padding */}
+      <div className="container bg-white p-3 rounded">
         <h1 className="text-center mb-4">Wähle eine Muskelgruppe</h1>
         <button className="btn btn-danger mb-3" onClick={handleLogout}>
           Logout

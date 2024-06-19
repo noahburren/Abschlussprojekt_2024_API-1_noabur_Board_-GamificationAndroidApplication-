@@ -66,8 +66,8 @@ const Exercises = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-primary min-vh-100">
-      <div className="bg-white p-3 rounded col-12 col-md-10 col-lg-8 overflow-auto">
+    <div className="bg-primary min-vh-100 py-4">
+      <div className="container bg-white p-3 rounded col-12 col-md-10 col-lg-8 overflow-auto">
         <h1 className="text-center mb-4">Übungen für {category}</h1>
         <ul className="list-group mb-4">
           {exercises.map((exercise) => (
