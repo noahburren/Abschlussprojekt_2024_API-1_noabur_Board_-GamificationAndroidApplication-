@@ -23,6 +23,16 @@ CREATE TABLE IF NOT EXISTS user_exercises (
     FOREIGN KEY (exercise_id) REFERENCES Uebungen(ID)
 );
 
+-- Kalender
+CREATE TABLE IF NOT EXISTS user_calendar (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    DAY TEXT NOT NULL,
+    exercise_id INTEGER NOT NULL,
+    FOREIGN KEY (exercise_id) REFERENCES Uebungen(ID)
+);
+
+
 -- Beinübungen
 INSERT INTO Uebungen (NAME, Kategorie) VALUES ('Leg Extensions', 'Beine');
 INSERT INTO Uebungen (NAME, Kategorie) VALUES ('Hamstring Curls', 'Beine');
