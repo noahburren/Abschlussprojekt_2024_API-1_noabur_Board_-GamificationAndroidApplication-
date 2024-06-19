@@ -1,0 +1,34 @@
+/* Hintergrundfarbe des gesamten Formulars */
+.bg-primary {
+  background-color: #2980b9; /* Dunkles Blau */
+}
+
+/* Hintergrundfarbe des Formularkastens */
+.bg-white {
+  background-color: #ecf0f1; /* Hellgrau */
+}
+
+/* Textfarbe für Überschrift */
+h2 {
+  color: #333333; /* Dunkles Grau */
+}
+
+/* Textfarbe und Hover-Effekt für den Log-in Button */
+.btn-success {
+  background-color: #27ae60; /* Dunkles Grün */
+  color: #ffffff; /* Weiss */
+  border-color: #27ae60;
+}
+
+.btn-success:hover {
+  background-color: #219653; /* Dunkleres Grün */
+}
+
+/* Textfarbe und Hover-Effekt für den Account erstellen Link */
+.btn-default {
+  color: #333333; /* Dunkles Grau */
+}
+
+.btn-default:hover {
+  color: #000000; /* Schwarz */
+}

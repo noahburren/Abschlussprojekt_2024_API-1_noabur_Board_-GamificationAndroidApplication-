@@ -6,6 +6,7 @@ import Validation from "./LoginValidation"; // Import der Validierungsfunktion
 import axios from "axios"; // Import von axios für HTTP-Anfragen
 import "bootstrap/dist/css/bootstrap.min.css"; // Import von Bootstrap CSS für das Styling
 import { AuthContext } from "./AuthContext"; // Import des AuthContext für die Authentifizierung
+import "./styles.css";
 
 function Login() {
   // State-Hooks für das Formular und die Fehlerbehandlung
