@@ -2,32 +2,60 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./SignupValidation";
 import axios from "axios";
+
 function Signup() {
   const [values, setValues] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "", // Neues Feld für die Passwortbestätigung
   });
-  const navigate = useNavigate();
+
   const [errors, setErrors] = useState({});
-  const handeInput = (event) => {
+  const navigate = useNavigate();
+
+  const handleInput = (event) => {
     setValues((prev) => ({
       ...prev,
-      [event.target.name]: [event.target.value],
+      [event.target.name]: event.target.value,
     }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // Validierung der Eingaben
     setErrors(Validation(values));
-    if (errors.name === "" && errors.email === "" && errors.password === "") {
+
+    // Überprüfen, ob Passwort und Bestätigung übereinstimmen
+    if (values.password !== values.confirmPassword) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Passwords do not match",
+      }));
+      return;
+    }
+
+    // Wenn alle Validierungen erfolgreich sind, Post-Anfrage senden
+    if (
+      !errors.name &&
+      !errors.email &&
+      !errors.password &&
+      !errors.confirmPassword
+    ) {
       axios
-        .post("http://localhost:8081/signup", values)
+        .post("http://localhost:8081/signup", {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        })
         .then((res) => {
           navigate("/");
         })
         .catch((err) => console.log(err));
     }
   };
+
   return (
     <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
       <div className="bg-white p-3 rounded w-25">
@@ -41,7 +69,8 @@ function Signup() {
               type="text"
               placeholder="Enter Name"
               name="name"
-              onChange={handeInput}
+              value={values.name}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.name && <span className="text-danger"> {errors.name}</span>}
@@ -54,7 +83,8 @@ function Signup() {
               type="email"
               placeholder="Enter Email"
               name="email"
-              onChange={handeInput}
+              value={values.email}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.email && (
@@ -69,11 +99,28 @@ function Signup() {
               type="password"
               placeholder="Enter Password"
               name="password"
-              onChange={handeInput}
+              value={values.password}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.password && (
               <span className="text-danger"> {errors.password}</span>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="confirmPassword">
+              <strong>Confirm Password</strong>
+            </label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              value={values.confirmPassword}
+              onChange={handleInput}
+              className="form-control rounded-0"
+            />
+            {errors.confirmPassword && (
+              <span className="text-danger"> {errors.confirmPassword}</span>
             )}
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">
@@ -91,4 +138,5 @@ function Signup() {
     </div>
   );
 }
+
 export default Signup;
