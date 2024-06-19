@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const WeeklyCalendar = () => {
+  const { userId } = useContext(AuthContext);
+  const [weeklyCategories, setWeeklyCategories] = useState({});
   const navigate = useNavigate();
 
-  // Dummy data for the weekly calendar
   const daysOfWeek = [
     "Montag",
     "Dienstag",
@@ -15,15 +18,28 @@ const WeeklyCalendar = () => {
     "Samstag",
     "Sonntag",
   ];
-  const exercises = {
-    Montag: [],
-    Dienstag: [],
-    Mittwoch: [],
-    Donnerstag: [],
-    Freitag: [],
-    Samstag: [],
-    Sonntag: [],
-  };
+
+  useEffect(() => {
+    const fetchWeeklyCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8081/user-calendar",
+          {
+            params: { userId },
+          }
+        );
+        const data = response.data.reduce((acc, entry) => {
+          acc[entry.day] = entry.category;
+          return acc;
+        }, {});
+        setWeeklyCategories(data);
+      } catch (error) {
+        console.error("Error fetching weekly categories:", error);
+      }
+    };
+
+    fetchWeeklyCategories();
+  }, [userId]);
 
   const handleNavigateBack = () => {
     navigate("/home");
@@ -45,15 +61,10 @@ const WeeklyCalendar = () => {
                 </div>
                 <div className="card-body">
                   <ul className="list-group">
-                    {exercises[day].length > 0 ? (
-                      exercises[day].map((exercise, idx) => (
-                        <li
-                          key={idx}
-                          className="list-group-item d-flex justify-content-between align-items-center"
-                        >
-                          {exercise}
-                        </li>
-                      ))
+                    {weeklyCategories[day] ? (
+                      <li className="list-group-item d-flex justify-content-between align-items-center">
+                        {weeklyCategories[day]}
+                      </li>
                     ) : (
                       <li className="list-group-item">Keine Übungen geplant</li>
                     )}

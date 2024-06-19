@@ -1,4 +1,3 @@
-// server.js
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
@@ -132,6 +131,48 @@ app.get("/user-exercises", (req, res) => {
     }, {});
 
     return res.json(exercisesByCategory);
+  });
+});
+
+// Endpoint to save the user's exercise category for a specific day
+app.post("/user-calendar", (req, res) => {
+  const { userId, day, category } = req.body;
+
+  // Remove existing entry for the user and day
+  const deleteQuery = "DELETE FROM user_calendar WHERE user_id = ? AND day = ?";
+  dbExercises.query(deleteQuery, [userId, day], (deleteErr, deleteResult) => {
+    if (deleteErr) {
+      console.error("Error deleting calendar entry:", deleteErr);
+      return res.status(500).json("Internal server error");
+    }
+
+    // Insert the new entry
+    const insertQuery =
+      "INSERT INTO user_calendar (user_id, day, category) VALUES (?, ?, ?)";
+    dbExercises.query(
+      insertQuery,
+      [userId, day, category],
+      (insertErr, insertResult) => {
+        if (insertErr) {
+          console.error("Error saving calendar entry:", insertErr);
+          return res.status(500).json("Internal server error");
+        }
+        return res.json("Calendar entry saved successfully!");
+      }
+    );
+  });
+});
+
+// Endpoint to get the user's exercise categories for the week
+app.get("/user-calendar", (req, res) => {
+  const userId = req.query.userId;
+  const sql = "SELECT day, category FROM user_calendar WHERE user_id = ?";
+  dbExercises.query(sql, [userId], (err, data) => {
+    if (err) {
+      console.error("Error fetching calendar entries:", err);
+      return res.status(500).json("Internal server error");
+    }
+    return res.json(data);
   });
 });
 

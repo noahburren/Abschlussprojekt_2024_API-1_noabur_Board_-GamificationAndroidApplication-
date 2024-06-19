@@ -8,8 +8,19 @@ const Exercises = () => {
   const { category } = useParams();
   const [exercises, setExercises] = useState([]);
   const [selectedExercises, setSelectedExercises] = useState([]);
+  const [selectedDay, setSelectedDay] = useState("");
   const { userId } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const daysOfWeek = [
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+    "Sonntag",
+  ];
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -41,10 +52,15 @@ const Exercises = () => {
         category,
         exercises: selectedExercises,
       });
-      alert("Exercises saved successfully!");
+      await axios.post("http://localhost:8081/user-calendar", {
+        userId,
+        day: selectedDay,
+        category,
+      });
+      alert("Exercises and day saved successfully!");
     } catch (error) {
-      console.error("Error saving exercises:", error);
-      alert("Error saving exercises.");
+      console.error("Error saving exercises or day:", error);
+      alert("Error saving exercises or day.");
     }
   };
 
@@ -86,6 +102,24 @@ const Exercises = () => {
             </li>
           ))}
         </ul>
+        <div className="mb-4">
+          <label htmlFor="daySelect" className="form-label">
+            Wählen Sie einen Tag
+          </label>
+          <select
+            id="daySelect"
+            className="form-select"
+            value={selectedDay}
+            onChange={(e) => setSelectedDay(e.target.value)}
+          >
+            <option value="">Tag auswählen</option>
+            {daysOfWeek.map((day) => (
+              <option key={day} value={day}>
+                {day}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="d-flex justify-content-between">
           <button className="btn btn-success" onClick={handleSaveExercises}>
             Übungen speichern
