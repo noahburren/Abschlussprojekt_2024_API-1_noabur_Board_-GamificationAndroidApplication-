@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const Home = () => {
   const navigate = useNavigate();
   const { userId, logout } = useContext(AuthContext);
-  const [userExercises, setUserExercises] = useState(null); // Initialize as null
+  const [userExercises, setUserExercises] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const muscleGroups = ["Beine", "Brust", "Rücken", "Arme"];
@@ -18,7 +18,6 @@ const Home = () => {
 
   useEffect(() => {
     if (selectedCategory !== null) {
-      // Check against null explicitly
       axios
         .get(`http://localhost:8081/user-exercises`, { params: { userId } })
         .then((response) => {
@@ -39,10 +38,12 @@ const Home = () => {
     navigate("/");
   };
 
+  const handleNavigateToCalendar = () => {
+    navigate("/weekly-calendar");
+  };
+
   return (
     <div className="bg-primary min-vh-100 py-4">
-      {" "}
-      {/* Added py-4 for padding */}
       <div className="container bg-white p-3 rounded">
         <h1 className="text-center mb-4">Wähle eine Muskelgruppe</h1>
         <button className="btn btn-danger mb-3" onClick={handleLogout}>
@@ -103,6 +104,12 @@ const Home = () => {
             </button>
           </div>
         ))}
+        <button
+          className="btn btn-primary mt-3"
+          onClick={handleNavigateToCalendar}
+        >
+          Zum Wochenkalender
+        </button>
       </div>
     </div>
   );

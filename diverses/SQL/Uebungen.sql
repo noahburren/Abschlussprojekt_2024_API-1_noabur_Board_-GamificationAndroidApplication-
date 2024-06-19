@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS user_exercises (
     FOREIGN KEY (exercise_id) REFERENCES Uebungen(ID)
 );
 
-
 -- Beinübungen
 INSERT INTO Uebungen (NAME, Kategorie) VALUES ('Leg Extensions', 'Beine');
 INSERT INTO Uebungen (NAME, Kategorie) VALUES ('Hamstring Curls', 'Beine');
