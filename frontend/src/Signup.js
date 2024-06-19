@@ -67,7 +67,7 @@ function Signup() {
             </label>
             <input
               type="text"
-              placeholder="Enter Name"
+              placeholder="Name eingeben"
               name="name"
               value={values.name}
               onChange={handleInput}
@@ -81,7 +81,7 @@ function Signup() {
             </label>
             <input
               type="email"
-              placeholder="Enter Email"
+              placeholder="Email eingeben"
               name="email"
               value={values.email}
               onChange={handleInput}
@@ -93,11 +93,11 @@ function Signup() {
           </div>
           <div className="mb-3">
             <label htmlFor="password">
-              <strong>Password</strong>
+              <strong>Passwort</strong>
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Passwort eingeben"
               name="password"
               value={values.password}
               onChange={handleInput}
@@ -109,11 +109,11 @@ function Signup() {
           </div>
           <div className="mb-3">
             <label htmlFor="confirmPassword">
-              <strong>Confirm Password</strong>
+              <strong>Passwort bestätigen</strong>
             </label>
             <input
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Passwort bestätigen"
               name="confirmPassword"
               value={values.confirmPassword}
               onChange={handleInput}
@@ -126,12 +126,12 @@ function Signup() {
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Sign up
           </button>
-          <p>You are agree to our terms and policies</p>
+          <p></p>
           <Link
             to="/"
             className="btn btn-default w-100 bg-light rounded-0 text-decoration-none"
           >
-            Log in
+            Du hast bereits einen Account?
           </Link>
         </form>
       </div>
