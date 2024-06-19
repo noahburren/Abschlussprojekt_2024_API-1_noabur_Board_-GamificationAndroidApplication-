@@ -1,30 +1,36 @@
 function Validation(values) {
-  let error = {};
+  let errors = {}; // Initialisiert ein leeres Objekt für Fehlermeldungen
+
+  // Definiert Regular Expressions für E-Mail und Passwort
   const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s]+$/;
   const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
+  // Validierung des Namens
   if (values.name === "") {
-    error.name = "Name darf nicht leer sein";
+    errors.name = "Name darf nicht leer sein";
   } else {
-    error.name = "";
+    errors.name = ""; // Setzt den Fehler für den Namen zurück, falls kein Fehler vorliegt
   }
 
+  // Validierung der E-Mail
   if (values.email === "") {
-    error.email = "Email darf nicht leer sein";
+    errors.email = "Email darf nicht leer sein";
   } else if (!email_pattern.test(values.email)) {
-    error.email = "Ungültige Email";
+    errors.email = "Ungültige Email";
   } else {
-    error.email = "";
+    errors.email = ""; // Setzt den Fehler für die E-Mail zurück, falls kein Fehler vorliegt
   }
 
+  // Validierung des Passworts
   if (values.password === "") {
-    error.password = "Password darf nicht leer sein";
+    errors.password = "Passwort darf nicht leer sein";
   } else if (!password_pattern.test(values.password)) {
-    error.password = "Ungültiges Password";
+    errors.password = "Ungültiges Passwort";
   } else {
-    error.password = "";
+    errors.password = ""; // Setzt den Fehler für das Passwort zurück, falls kein Fehler vorliegt
   }
-  return error;
+
+  return errors; // Gibt das Objekt mit den Validierungsfehlern zurück
 }
 
-export default Validation;
+export default Validation; // Exportiert die Validierungsfunktion

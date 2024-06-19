@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const WeeklyCalendar = () => {
   const { userId } = useContext(AuthContext);
-  const [weeklyCategories, setWeeklyCategories] = useState({});
+  const [weeklyCategories, setWeeklyCategories] = useState({}); // Objekt für wöchentliche Kategorien
   const navigate = useNavigate();
 
   const daysOfWeek = [
@@ -29,20 +29,20 @@ const WeeklyCalendar = () => {
           }
         );
         const data = response.data.reduce((acc, entry) => {
-          acc[entry.day] = entry.category;
+          acc[entry.day] = entry.category; // Mapping der Daten in ein Objekt mit Tagen als Schlüssel
           return acc;
         }, {});
-        setWeeklyCategories(data);
+        setWeeklyCategories(data); // Setzen der wöchentlichen Kategorien im State
       } catch (error) {
         console.error("Error fetching weekly categories:", error);
       }
     };
 
-    fetchWeeklyCategories();
-  }, [userId]);
+    fetchWeeklyCategories(); // Datenabfrage beim Laden der Komponente
+  }, [userId]); // Abhängigkeit von userId für die Datenabfrage
 
   const handleNavigateBack = () => {
-    navigate("/home");
+    navigate("/home"); // Navigieren zur Home-Seite
   };
 
   return (

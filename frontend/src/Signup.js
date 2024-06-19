@@ -13,21 +13,27 @@ function Signup() {
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
-  const handeInput = (event) => {
+
+  const handleInput = (event) => {
+    const { name, value } = event.target;
     setValues((prev) => ({
       ...prev,
-      [event.target.name]: [event.target.value],
+      [name]: value,
     }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setErrors(Validation(values));
-    if (errors.name === "" && errors.email === "" && errors.password === "") {
+
+    const validationErrors = Validation(values);
+    setErrors(validationErrors);
+
+    // Überprüfen, ob es keine Validierungsfehler gibt
+    if (Object.keys(validationErrors).length === 0) {
       axios
         .post("http://localhost:8081/signup", values)
         .then((res) => {
-          navigate("/");
+          navigate("/"); // Nach erfolgreicher Registrierung zur Login-Seite navigieren
         })
         .catch((err) => console.log(err));
     }
@@ -37,7 +43,7 @@ function Signup() {
     <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
       <div className="bg-white p-3 rounded w-25">
         <h2>Sign-Up</h2>
-        <form action="" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name">
               <strong>Name</strong>
@@ -46,7 +52,8 @@ function Signup() {
               type="text"
               placeholder="Name eingeben"
               name="name"
-              onChange={handeInput}
+              value={values.name}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.name && <span className="text-danger"> {errors.name}</span>}
@@ -59,7 +66,8 @@ function Signup() {
               type="email"
               placeholder="Email eingeben"
               name="email"
-              onChange={handeInput}
+              value={values.email}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.email && (
@@ -74,7 +82,8 @@ function Signup() {
               type="password"
               placeholder="Passwort eingeben"
               name="password"
-              onChange={handeInput}
+              value={values.password}
+              onChange={handleInput}
               className="form-control rounded-0"
             />
             {errors.password && (

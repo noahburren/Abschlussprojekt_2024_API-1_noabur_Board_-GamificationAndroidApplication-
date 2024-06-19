@@ -5,41 +5,46 @@ import { AuthContext } from "./AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { userId, logout } = useContext(AuthContext);
-  const [userExercises, setUserExercises] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate = useNavigate(); // Hook zum Navigieren zwischen Seiten
+  const { userId, logout } = useContext(AuthContext); // Zugriff auf userId und logout-Funktion aus dem AuthContext
+  const [userExercises, setUserExercises] = useState(null); // Zustand für Benutzerübungen
+  const [selectedCategory, setSelectedCategory] = useState(null); // Zustand für ausgewählte Muskelgruppe
 
-  const muscleGroups = ["Beine", "Brust", "Rücken", "Arme"];
+  const muscleGroups = ["Beine", "Brust", "Rücken", "Arme"]; // Array mit Muskelgruppen
 
+  // Funktion zum Behandeln des Klicks auf eine Muskelgruppe
   const handleCategoryClick = (category) => {
-    navigate(`/exercises/${category}`);
+    navigate(`/exercises/${category}`); // Navigiert zur Seite mit Übungen für die ausgewählte Muskelgruppe
   };
 
+  // Effekt zum Abrufen der Benutzerübungen, wenn sich userId oder selectedCategory ändert
   useEffect(() => {
     if (selectedCategory !== null) {
       axios
         .get(`http://localhost:8081/user-exercises`, { params: { userId } })
         .then((response) => {
-          setUserExercises(response.data);
+          setUserExercises(response.data); // Setzt den Zustand userExercises mit den abgerufenen Daten
         })
         .catch((error) => {
-          console.error("Error fetching user exercises:", error);
+          console.error("Fehler beim Abrufen der Benutzerübungen:", error); // Fehlermeldung, falls das Abrufen fehlschlägt
         });
     }
-  }, [userId, selectedCategory]);
+  }, [userId, selectedCategory]); // Abhängigkeitsarray stellt sicher, dass der Effekt bei Änderungen von userId oder selectedCategory ausgeführt wird
 
+  // Funktion zum Anzeigen der Übungen für eine bestimmte Muskelgruppe
   const handleShowExercises = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category); // Setzt den Zustand selectedCategory auf die ausgewählte Muskelgruppe
   };
 
+  // Funktion zum Ausloggen des Benutzers
   const handleLogout = () => {
-    logout();
-    navigate("/");
+    logout(); // Ruft die logout-Funktion aus dem AuthContext auf
+    navigate("/"); // Navigiert zurück zur Startseite nach dem Ausloggen
   };
 
+  // Funktion zum Navigieren zur Wochenkalender-Seite
   const handleNavigateToCalendar = () => {
-    navigate("/weekly-calendar");
+    navigate("/weekly-calendar"); // Navigiert zur Wochenkalender-Seite
   };
 
   return (
