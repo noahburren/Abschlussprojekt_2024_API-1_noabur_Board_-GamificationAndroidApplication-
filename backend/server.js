@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
@@ -102,6 +103,35 @@ app.delete("/user-exercises/:category", (req, res) => {
       return res.status(500).json("Internal server error");
     }
     return res.json("User exercises deleted successfully!");
+  });
+});
+
+app.get("/user-exercises", (req, res) => {
+  const userId = req.query.userId;
+  const sql = `
+    SELECT ue.category, ue.exercise_id, u.NAME
+    FROM user_exercises ue
+    JOIN Uebungen u ON ue.exercise_id = u.ID
+    WHERE ue.user_id = ?
+  `;
+  dbExercises.query(sql, [userId], (err, data) => {
+    if (err) {
+      console.error("Error fetching user exercises:", err);
+      return res.status(500).json("Internal server error");
+    }
+
+    const exercisesByCategory = data.reduce((acc, exercise) => {
+      if (!acc[exercise.category]) {
+        acc[exercise.category] = [];
+      }
+      acc[exercise.category].push({
+        ID: exercise.exercise_id,
+        NAME: exercise.NAME,
+      });
+      return acc;
+    }, {});
+
+    return res.json(exercisesByCategory);
   });
 });
 

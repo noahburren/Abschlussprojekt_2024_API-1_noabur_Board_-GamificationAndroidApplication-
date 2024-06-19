@@ -1,14 +1,13 @@
-// Exercises.js
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "./AuthContext"; // AuthContext importieren
+import { AuthContext } from "./AuthContext"; // Ensure you have AuthContext to get userId
 
 const Exercises = () => {
   const { category } = useParams();
   const [exercises, setExercises] = useState([]);
   const [selectedExercises, setSelectedExercises] = useState([]);
-  const { userId } = useContext(AuthContext); // userId aus dem AuthContext
+  const { userId } = useContext(AuthContext); // Get userId from AuthContext
   const navigate = useNavigate();
 
   useEffect(() => {
