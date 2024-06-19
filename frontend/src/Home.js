@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const Home = () => {
   const navigate = useNavigate();
   const { userId, logout } = useContext(AuthContext);
-  const [userExercises, setUserExercises] = useState({});
+  const [userExercises, setUserExercises] = useState(null); // Initialize as null
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const muscleGroups = ["Beine", "Brust", "Rücken", "Arme"];
@@ -17,7 +17,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (selectedCategory) {
+    if (selectedCategory !== null) {
+      // Check against null explicitly
       axios
         .get(`http://localhost:8081/user-exercises`, { params: { userId } })
         .then((response) => {
@@ -70,21 +71,24 @@ const Home = () => {
               </div>
               <div className="card-body">
                 <ul className="list-group">
-                  {selectedCategory === category &&
-                  userExercises[category] &&
-                  userExercises[category].length > 0 ? (
-                    userExercises[category].map((exercise) => (
-                      <li
-                        key={exercise.ID}
-                        className="list-group-item d-flex justify-content-between align-items-center"
-                      >
-                        {exercise.NAME}
+                  {selectedCategory === category && userExercises !== null ? (
+                    userExercises[category] &&
+                    userExercises[category].length > 0 ? (
+                      userExercises[category].map((exercise) => (
+                        <li
+                          key={exercise.ID}
+                          className="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                          {exercise.NAME}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="list-group-item">
+                        Keine Übung dieser Kategorie vorhanden
                       </li>
-                    ))
+                    )
                   ) : (
-                    <li className="list-group-item">
-                      Keine Übung dieser Kategorie vorhanden
-                    </li>
+                    <li className="list-group-item"></li>
                   )}
                 </ul>
               </div>
