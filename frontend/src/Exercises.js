@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from "./AuthContext";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useParams, useNavigate } from "react-router-dom"; // Import der useParams- und useNavigate-Hooks für die Verwendung von URL-Parametern und Navigation
+import axios from "axios"; // Import von axios für HTTP-Anfragen
+import { AuthContext } from "./AuthContext"; // Import des AuthContext für Benutzerinformationen
+import "bootstrap/dist/css/bootstrap.min.css"; // Import von Bootstrap CSS für Styling
 
 const Exercises = () => {
-  const { category } = useParams();
-  const [exercises, setExercises] = useState([]);
-  const [selectedExercises, setSelectedExercises] = useState([]);
-  const [selectedDay, setSelectedDay] = useState("");
-  const { userId } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { category } = useParams(); // Extrahiert den Parameter "category" aus der URL
+  const [exercises, setExercises] = useState([]); // Zustand für die geladenen Übungen der aktuellen Kategorie
+  const [selectedExercises, setSelectedExercises] = useState([]); // Zustand für ausgewählte Übungen
+  const [selectedDay, setSelectedDay] = useState(""); // Zustand für den ausgewählten Tag
+  const { userId } = useContext(AuthContext); // Zugriff auf userId aus dem AuthContext für Authentifizierung
+  const navigate = useNavigate(); // Hook zum Navigieren zwischen Seiten
 
   const daysOfWeek = [
     "Montag",
@@ -20,35 +20,38 @@ const Exercises = () => {
     "Freitag",
     "Samstag",
     "Sonntag",
-  ];
+  ]; // Array mit Wochentagen für die Auswahl
 
+  // Effekt zum Abrufen der Übungen für die aktuelle Kategorie
   useEffect(() => {
     const fetchExercises = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8081/exercises/${category}`
-        );
-        setExercises(response.data);
+        ); // GET-Anfrage an die API für Übungen der aktuellen Kategorie
+        setExercises(response.data); // Setzt den Zustand exercises mit den erhaltenen Daten
       } catch (error) {
-        console.error("Fehler beim Laden der Übungen:", error);
-        alert("Fehler beim Laden der Übungen.");
+        console.error("Fehler beim Laden der Übungen:", error); // Konsolenausgabe bei Fehler
+        alert("Fehler beim Laden der Übungen."); // Fehlermeldung für Benutzer
       }
     };
 
-    fetchExercises();
-  }, [category]);
+    fetchExercises(); // Ruft die Funktion zum Laden der Übungen auf
+  }, [category]); // Abhängigkeitsarray stellt sicher, dass der Effekt bei Änderungen von category ausgeführt wird
 
+  // Funktion zum Auswählen bzw. Abwählen einer Übung
   const handleSelectExercise = (exercise) => {
     setSelectedExercises((prev) =>
       prev.includes(exercise)
         ? prev.filter((e) => e !== exercise)
         : [...prev, exercise]
-    );
+    ); // Aktualisiert den Zustand selectedExercises entsprechend der Auswahl
   };
 
+  // Funktion zum Speichern der ausgewählten Übungen für einen Tag
   const handleSaveExercises = async () => {
     if (!selectedDay) {
-      alert("Bitte wählen Sie einen Tag aus.");
+      alert("Bitte wählen Sie einen Tag aus."); // Benutzerhinweis, falls kein Tag ausgewählt wurde
       return;
     }
 
@@ -57,34 +60,36 @@ const Exercises = () => {
         userId,
         category,
         exercises: selectedExercises,
-      });
+      }); // POST-Anfrage zum Speichern der ausgewählten Übungen eines Benutzers
       await axios.post("http://localhost:8081/user-calendar", {
         userId,
         day: selectedDay,
         category,
-      });
-      alert("Übungen und Tag erfolgreich gespeichert!");
+      }); // POST-Anfrage zum Speichern des ausgewählten Tags im Kalender
+      alert("Übungen und Tag erfolgreich gespeichert!"); // Erfolgsmeldung für den Benutzer
     } catch (error) {
-      console.error("Fehler beim Speichern der Übungen oder des Tages:", error);
-      alert("Fehler beim Speichern der Übungen oder des Tages.");
+      console.error("Fehler beim Speichern der Übungen oder des Tages:", error); // Konsolenausgabe bei Fehlern
+      alert("Fehler beim Speichern der Übungen oder des Tages."); // Fehlermeldung für Benutzer
     }
   };
 
+  // Funktion zum Löschen aller gespeicherten Übungen einer Kategorie
   const handleDeleteExercises = async () => {
     try {
       await axios.delete(`http://localhost:8081/user-exercises/${category}`, {
         data: { userId },
-      });
-      alert("Übungen erfolgreich gelöscht!");
-      setSelectedExercises([]);
+      }); // DELETE-Anfrage zum Löschen der Übungen einer Kategorie für einen Benutzer
+      alert("Übungen erfolgreich gelöscht!"); // Erfolgsmeldung für den Benutzer
+      setSelectedExercises([]); // Leert die Auswahl der ausgewählten Übungen
     } catch (error) {
-      console.error("Fehler beim Löschen der Übungen:", error);
-      alert("Fehler beim Löschen der Übungen.");
+      console.error("Fehler beim Löschen der Übungen:", error); // Konsolenausgabe bei Fehlern
+      alert("Fehler beim Löschen der Übungen."); // Fehlermeldung für Benutzer
     }
   };
 
+  // Funktion zum Navigieren zurück zur Home-Seite
   const handleNavigateToHome = () => {
-    navigate("/home");
+    navigate("/home"); // Navigiert zur Home-Seite
   };
 
   return (
