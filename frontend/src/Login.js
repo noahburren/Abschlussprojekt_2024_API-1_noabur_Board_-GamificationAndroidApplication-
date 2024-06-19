@@ -78,7 +78,7 @@ function Login() {
             </label>
             <input
               type="password"
-              placeholder="Passwortd eingeben"
+              placeholder="Passwort eingeben"
               name="password"
               onChange={handleInput} // onChange-Handler für Passworteingabe
               className="form-control rounded-0"
