@@ -4,23 +4,23 @@ function Validation(values) {
   const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
   if (values.name === "") {
-    error.name = "Name should not be empty";
+    error.name = "Name darf nicht leer sein";
   } else {
     error.name = "";
   }
 
   if (values.email === "") {
-    error.email = "Email should not be empty";
+    error.email = "Email darf nicht leer sein";
   } else if (!email_pattern.test(values.email)) {
-    error.email = "Invalid Email";
+    error.email = "Ungültige Email";
   } else {
     error.email = "";
   }
 
   if (values.password === "") {
-    error.password = "Password should not be empty";
+    error.password = "Password darf nicht leer sein";
   } else if (!password_pattern.test(values.password)) {
-    error.password = "Invalid Password";
+    error.password = "Ungültiges Password";
   } else {
     error.password = "";
   }

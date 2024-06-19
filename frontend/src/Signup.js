@@ -44,7 +44,7 @@ function Signup() {
             </label>
             <input
               type="text"
-              placeholder="Enter Name"
+              placeholder="Name eingeben"
               name="name"
               onChange={handeInput}
               className="form-control rounded-0"
@@ -57,7 +57,7 @@ function Signup() {
             </label>
             <input
               type="email"
-              placeholder="Enter Email"
+              placeholder="Email eingeben"
               name="email"
               onChange={handeInput}
               className="form-control rounded-0"
@@ -68,11 +68,11 @@ function Signup() {
           </div>
           <div className="mb-3">
             <label htmlFor="password">
-              <strong>Password</strong>
+              <strong>Passwort</strong>
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Passwort eingeben"
               name="password"
               onChange={handeInput}
               className="form-control rounded-0"
@@ -84,7 +84,7 @@ function Signup() {
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Sign up
           </button>
-          <p>You are agree to our terms and policies</p>
+          <p></p>
           <Link
             to="/"
             className="btn btn-default w-100 bg-light rounded-0 text-decoration-none"

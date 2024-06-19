@@ -35,7 +35,7 @@ function Login() {
             login({ userId: res.data.userId }); // Benutzer-ID im AuthContext speichern
             navigate("/home");
           } else {
-            alert("No record existed");
+            alert("Kein Account gefunden");
           }
         })
         .catch((err) => console.log(err));
@@ -53,7 +53,7 @@ function Login() {
             </label>
             <input
               type="email"
-              placeholder="Enter Email"
+              placeholder="Email eingeben"
               name="email"
               onChange={handleInput}
               className="form-control rounded-0"
@@ -64,11 +64,11 @@ function Login() {
           </div>
           <div className="mb-3">
             <label htmlFor="password">
-              <strong>Password</strong>
+              <strong>Passwort</strong>
             </label>
             <input
               type="password"
-              placeholder="Enter Password"
+              placeholder="Password eingeben"
               name="password"
               onChange={handleInput}
               className="form-control rounded-0"
@@ -80,12 +80,12 @@ function Login() {
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Log in
           </button>
-          <p>You agree to our terms and policies</p>
+          <p></p>
           <Link
             to="/signup"
             className="btn btn-default w-100 bg-light rounded-0 text-decoration-none"
           >
-            Create Account
+            Account erstellen
           </Link>
         </form>
       </div>

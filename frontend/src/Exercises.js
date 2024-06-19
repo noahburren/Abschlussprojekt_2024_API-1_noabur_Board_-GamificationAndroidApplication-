@@ -30,7 +30,8 @@ const Exercises = () => {
         );
         setExercises(response.data);
       } catch (error) {
-        console.error("Error fetching exercises:", error);
+        console.error("Fehler beim Laden der Übungen:", error);
+        alert("Fehler beim Laden der Übungen.");
       }
     };
 
@@ -46,6 +47,11 @@ const Exercises = () => {
   };
 
   const handleSaveExercises = async () => {
+    if (!selectedDay) {
+      alert("Bitte wählen Sie einen Tag aus.");
+      return;
+    }
+
     try {
       await axios.post("http://localhost:8081/user-exercises", {
         userId,
@@ -57,10 +63,10 @@ const Exercises = () => {
         day: selectedDay,
         category,
       });
-      alert("Exercises and day saved successfully!");
+      alert("Übungen und Tag erfolgreich gespeichert!");
     } catch (error) {
-      console.error("Error saving exercises or day:", error);
-      alert("Error saving exercises or day.");
+      console.error("Fehler beim Speichern der Übungen oder des Tages:", error);
+      alert("Fehler beim Speichern der Übungen oder des Tages.");
     }
   };
 
@@ -69,11 +75,11 @@ const Exercises = () => {
       await axios.delete(`http://localhost:8081/user-exercises/${category}`, {
         data: { userId },
       });
-      alert("Exercises deleted successfully!");
+      alert("Übungen erfolgreich gelöscht!");
       setSelectedExercises([]);
     } catch (error) {
-      console.error("Error deleting exercises:", error);
-      alert("Error deleting exercises.");
+      console.error("Fehler beim Löschen der Übungen:", error);
+      alert("Fehler beim Löschen der Übungen.");
     }
   };
 
@@ -129,7 +135,7 @@ const Exercises = () => {
           </button>
         </div>
         <button className="btn btn-primary mt-3" onClick={handleNavigateToHome}>
-          Zurück zu Home
+          Zurück zu deinen Übungen
         </button>
       </div>
     </div>
