@@ -8,7 +8,7 @@ function Signup() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "", // Neues Feld für die Passwortbestätigung
+    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -25,24 +25,17 @@ function Signup() {
     event.preventDefault();
 
     // Validierung der Eingaben
-    setErrors(Validation(values));
+    const validationErrors = Validation(values);
 
     // Überprüfen, ob Passwort und Bestätigung übereinstimmen
     if (values.password !== values.confirmPassword) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword: "Passwords do not match",
-      }));
-      return;
+      validationErrors.confirmPassword = "Passwords do not match";
     }
 
-    // Wenn alle Validierungen erfolgreich sind, Post-Anfrage senden
-    if (
-      !errors.name &&
-      !errors.email &&
-      !errors.password &&
-      !errors.confirmPassword
-    ) {
+    setErrors(validationErrors);
+
+    // Überprüfen, ob es keine Validierungsfehler gibt
+    if (Object.keys(validationErrors).length === 0) {
       axios
         .post("http://localhost:8081/signup", {
           name: values.name,
@@ -53,6 +46,8 @@ function Signup() {
           navigate("/");
         })
         .catch((err) => console.log(err));
+    } else {
+      console.log("Validation errors:", validationErrors); // Debugging
     }
   };
 

@@ -1,3 +1,4 @@
+// Validation.js
 function Validation(values) {
   let errors = {}; // Initialisiert ein leeres Objekt für Fehlermeldungen
 
@@ -8,8 +9,6 @@ function Validation(values) {
   // Validierung des Namens
   if (values.name === "") {
     errors.name = "Name darf nicht leer sein";
-  } else {
-    errors.name = ""; // Setzt den Fehler für den Namen zurück, falls kein Fehler vorliegt
   }
 
   // Validierung der E-Mail
@@ -17,8 +16,6 @@ function Validation(values) {
     errors.email = "Email darf nicht leer sein";
   } else if (!email_pattern.test(values.email)) {
     errors.email = "Ungültige Email";
-  } else {
-    errors.email = ""; // Setzt den Fehler für die E-Mail zurück, falls kein Fehler vorliegt
   }
 
   // Validierung des Passworts
@@ -33,11 +30,9 @@ function Validation(values) {
       "Passwort muss mindestens einen Grossbuchstaben enthalten";
   } else if (!password_pattern.test(values.password)) {
     errors.password = "Ungültiges Passwort";
-  } else {
-    errors.password = ""; // Setzt den Fehler für das Passwort zurück, falls kein Fehler vorliegt
   }
 
   return errors; // Gibt das Objekt mit den Validierungsfehlern zurück
 }
 
-export default Validation; // Exportiert die Validierungsfunktion
+export default Validation;
