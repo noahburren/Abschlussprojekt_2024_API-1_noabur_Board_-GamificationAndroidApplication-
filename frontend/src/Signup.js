@@ -36,7 +36,7 @@ function Signup() {
 
     // Überprüfen, ob Passwort und Bestätigung übereinstimmen
     if (values.password !== values.confirmPassword) {
-      validationErrors.confirmPassword = "Passwords do not match";
+      validationErrors.confirmPassword = "Passwörter stimmen nicht überein";
     }
 
     setErrors(validationErrors);
