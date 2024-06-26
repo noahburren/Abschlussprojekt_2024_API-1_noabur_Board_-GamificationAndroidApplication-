@@ -32,7 +32,7 @@ app.post("/signup", (req, res) => {
       console.error("Error inserting user:", err);
       return res.status(500).json("Internal server error");
     }
-    return res.json(data); // Return some response on success (e.g., { message: "User created" })
+    return res.json(data);
   });
 });
 
