@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Übungsauswahl
+*/
+
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import der useParams- und useNavigate-Hooks für die Verwendung von URL-Parametern und Navigation
 import axios from "axios"; // Import von axios für HTTP-Anfragen

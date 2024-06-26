@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Serververbindungen für Login, Übungen und Kalender
+*/
+
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");

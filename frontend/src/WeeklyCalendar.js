@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Wochenkalender
+*/
+
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios"; // Import von axios für HTTP-Anfragen
 import { useNavigate } from "react-router-dom"; // Import der useNavigate-Hook für die Navigation

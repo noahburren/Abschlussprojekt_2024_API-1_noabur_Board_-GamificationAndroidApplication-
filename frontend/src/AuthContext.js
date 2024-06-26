@@ -1,4 +1,9 @@
-// AuthContext.js
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Liest die user id des angemeldeten heraus
+*/
 
 import React, { createContext, useState, useEffect } from "react";
 

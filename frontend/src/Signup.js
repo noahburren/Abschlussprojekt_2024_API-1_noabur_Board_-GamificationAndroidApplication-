@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Signup Seite
+*/
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Validation from "./SignupValidation";

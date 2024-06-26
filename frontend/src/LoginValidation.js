@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Prüft Logindaten auf RegEx
+*/
+
 function Validation(values) {
   let errors = {};
   const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s]+$/;

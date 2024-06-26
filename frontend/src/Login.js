@@ -1,4 +1,9 @@
-// Login.js
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Login Seite
+*/
 
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import der benötigten Hooks aus react-router-dom

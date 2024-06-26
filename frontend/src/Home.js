@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Homepage mit Übungsanzeige und Kategorienauswahl
+*/
+
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom"; // Import der useNavigate-Hook für Navigation
 import axios from "axios"; // Import von axios für HTTP-Anfragen

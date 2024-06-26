@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: Die eigentliche App, alle Router
+*/
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; // Link importieren
 import Login from "./Login";

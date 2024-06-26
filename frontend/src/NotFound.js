@@ -1,3 +1,10 @@
+/*
+  Autor: Noah Burren
+  Datum: 26.06.2024
+  Version: 1
+  Beschreibung: 404 Not Found Seite
+*/
+
 import React from "react";
 import { Link } from "react-router-dom";
 
